@@ -191,6 +191,8 @@ func (enc *JsonEncoder) NoKeyJoin2(v []interface{}) {
 	enc.WriteByte(',')
 }
 
+func (enc *JsonEncoder) Join3(key string)
+
 func (enc *JsonEncoder) Join2(key string, v []interface{}) {
 	enc.Key(key)
 
@@ -354,12 +356,23 @@ func (enc *JsonEncoder) KV(key string, s interface{}) {
 		enc.kv1(key, strconv.Itoa(int(val)))
 
 	case []string:
-		enc.Join(key, val)
+		Join[string](enc, key, val, true)
 	case []byte:
 		enc.kv2(key, strutil.B2S(val))
+	case []bool:
+		Join[bool](enc, key, val, false)
 
+	case []int:
+		Join[int](enc, key, val, false)
+	case []float64:
+		Join[float64](enc, key, val, false)
 	case []interface{}:
-		enc.Join2(key, val)
+		chunk, err := json.Marshal(val)
+		if err != nil {
+			enc.Raw(key, empty)
+			return
+		}
+		enc.Raw(key, chunk)
 
 	case time.Time:
 		if y := val.Year(); y < 0 || y >= 10000 {
