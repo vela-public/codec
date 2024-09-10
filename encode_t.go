@@ -1,9 +1,15 @@
 package codec
 
+import (
+	"github.com/vela-public/strutil"
+)
+
+var EmptyA = []byte("[]")
+
 func Join[T any](enc *JsonEncoder, key string, data []T, quote bool) {
 	n := len(data)
 	if n == 0 {
-		enc.Raw(key, empty)
+		enc.Raw(key, EmptyA)
 		return
 	}
 
