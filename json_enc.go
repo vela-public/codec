@@ -369,7 +369,7 @@ func (enc *JsonEncoder) KV(key string, s interface{}) {
 	case []interface{}:
 		chunk, err := json.Marshal(val)
 		if err != nil {
-			enc.Raw(key, empty)
+			enc.Raw(key, EmptyA)
 			return
 		}
 		enc.Raw(key, chunk)
