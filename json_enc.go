@@ -191,8 +191,6 @@ func (enc *JsonEncoder) NoKeyJoin2(v []interface{}) {
 	enc.WriteByte(',')
 }
 
-func (enc *JsonEncoder) Join3(key string)
-
 func (enc *JsonEncoder) Join2(key string, v []interface{}) {
 	enc.Key(key)
 
